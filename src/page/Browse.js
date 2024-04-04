@@ -3,6 +3,8 @@ import Header from "../component/Header";
 import Card from "../component/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovieData } from "../reducers/MovieReducer";
+import Footer from "../component/Footer";
+import SearchOverlay from "../component/SearchOverlay";
 
 const Browse = () => {
   const dispatch = useDispatch();
@@ -14,24 +16,27 @@ const Browse = () => {
       .then((res) => res.json())
       .then((res) => dispatch(setMovieData(res.results)))
       .catch((err) => console.log(err));
-  }, [dispatch]);
+  }, []);
 
   const movies = useSelector((state) => state.moviedata.movies);
-  console.log(movies);
+  const searchKeyword = useSelector((state) => state.searchText.searchText);
 
   return (
     <div className="w-screen h-fit bg-black">
       <Header />
+      {searchKeyword ? <SearchOverlay /> : null}
+
       <div className="p-10">
         <h1 className="text-left text-white text-5xl font-extrabold ">
           What to Watch - IMDb
         </h1>
-        <div className=" grid grid-cols-5  gap-2 mt-4">
-          {movies.map((item) => (
-            <Card info={item} />
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6   gap-2 mt-4">
+          {movies.map((movie, index) => (
+            <Card key={index} info={movie} />
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

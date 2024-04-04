@@ -8,7 +8,7 @@ export const counterSlice = createSlice({
   reducers: {
     addToWatchlist: (state, action) => {
       const temp = state.watchlist.filter(
-        (movie) => movie.id === action.payload.id
+        (movieId) => movieId === action.payload
       );
       if (temp.length === 0)
         state.watchlist = [...state.watchlist, action.payload];
@@ -16,7 +16,7 @@ export const counterSlice = createSlice({
 
     removeFromWatchList: (state, action) => {
       state.watchlist = state.watchlist.filter(
-        (movie) => movie.id !== action.payload.id
+        (movieId) => movieId !== action.payload
       );
     },
   },
