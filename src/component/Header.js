@@ -20,6 +20,12 @@ const Header = () => {
       <Link to="/">
         <img className="w-16" src={hero} alt="img" />
       </Link>
+      <Link
+        className="text-base text-white font-semibold flex items-center justify-center gap-2 hover:bg-slate-600 p-2"
+        to={"/"}
+      >
+        Home
+      </Link>
       <input
         className="w-96 px-2 py-1 bg-white text-black rounded-md outline-none"
         placeholder="Search something"

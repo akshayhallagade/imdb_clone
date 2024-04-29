@@ -5,9 +5,11 @@ import PlayButton from "./PlayButton";
 import { BookMarkchecked } from "../assets/icons/icons";
 import { useDispatch } from "react-redux";
 import { removeFromWatchList } from "../reducers/WatchListReducer";
+import { addToGenre } from "../reducers/GenreReducer";
 
 const WatchListCard = ({ movieId }) => {
   const [movieInfo, setMovieInfo] = useState({});
+  const dispatch = useDispatch();
   const poster_base_url = "https://image.tmdb.org/t/p/w500";
 
   useEffect(() => {
@@ -15,10 +17,13 @@ const WatchListCard = ({ movieId }) => {
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=66da3d7d02515244f65a84cfb6cd4c72`
     )
       .then((res) => res.json())
-      .then((res) => setMovieInfo(res));
-  }, [movieId]);
+      .then((res) => {
+        console.log(res);
+        res.genres.forEach((element) => dispatch(addToGenre(element.id)));
+        setMovieInfo(res);
+      });
+  }, [dispatch, movieId]);
 
-  const dispatch = useDispatch();
   const handleRemoveFromWatchList = () =>
     dispatch(removeFromWatchList(movieId));
 
